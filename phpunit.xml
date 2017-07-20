@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="bootstrap/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
+    <testsuites>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./tests/Feature</directory>
+        </testsuite>
+
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/Unit</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./app</directory>
+        </whitelist>
+    </filter>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="CACHE_DRIVER" value="array"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="SOLR_HOST" value="localhost"/>
+        <env name="SOLR_PORT" value="8983"/>
+        <env name="SOLR_PATH" value="/solr/"/>
+        <env name="SOLR_CORE" value="gettingstarted"/>
+        <env name="SOLR_USERNAME" value=""/>
+        <env name="SOLR_PASSWORD" value=""/>
+        <env name="SOLR_TIMEOUT" value="50"/>
+        <env name="SERVICE_SECURE_TOKEN" value="abcd"/>
+        <env name="GENERIC_VALIDATION_RULE_ID" value="sometimes|numeric"/>
+        <env name="INPUT_VALIDATION_RULE_SOURCE" value="required|in:feed,google"/>
+    </php>
+</phpunit>
