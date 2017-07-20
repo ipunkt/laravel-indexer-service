@@ -34,7 +34,7 @@
 			"NO_MIGRATE": true,
 			"NO_SEED": true,
 			"SENTRY_DSN": "",
-			"APP_KEY": "base64:WMNa3A7KdAq8NMABeXrQDVZ0tg3BfaV1stkZ5melL6g="
+			"APP_KEY": "base64:OHYjLsSl/pOqEcBx5lEAAXlJu0V1+NGKer6qIcLKQ7E="
 		}
 	},
 	"environments": {
@@ -48,8 +48,8 @@
 			"environment": {
 				"APP_ENV": "local",
 				"APP_DEBUG": true,
-				"APP_KEY": "base64:14Bp/oUv0Va4MMdT/cK8rKrypEIrj5MW0dlIbUcSFK0=",
-				"SOLR_HOST": "127.0.0.1",
+				"APP_KEY": "base64:GQJLEf0JkXLIv6smwmASBXr0pcnYSEiGPxBr4pz46JU=",
+				"SOLR_HOST": "192.168.190.24",
 				"SOLR_PORT": 8983,
 				"SOLR_PATH": "/solr/",
 				"SOLR_CORE": "gettingstarted",
