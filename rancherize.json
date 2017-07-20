@@ -33,7 +33,7 @@
 			"REDIS_HOST": "redis",
 			"NO_MIGRATE": true,
 			"NO_SEED": true,
-			"SENTRY_DSN": "YOUR-SENTRY-DSN",
+			"SENTRY_DSN": "",
 			"APP_KEY": "base64:WMNa3A7KdAq8NMABeXrQDVZ0tg3BfaV1stkZ5melL6g="
 		}
 	},
