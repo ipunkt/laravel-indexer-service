@@ -9,7 +9,6 @@ use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Ipunkt\LaravelIndexer\Http\Controllers\Controller;
 use Ipunkt\LaravelJsonApi\Contracts\RequestHandlers\ApiRequestHandler;
-use Ipunkt\LaravelJsonApi\Repositories\PaginatedResult;
 use Solarium\Client;
 use Solarium\QueryType\Select\Result\Document;
 
