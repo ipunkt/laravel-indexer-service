@@ -6,7 +6,6 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Ipunkt\LaravelIndexer\Http\Controllers\Controller;
 use Ipunkt\LaravelJsonApi\Contracts\RequestHandlers\ApiRequestHandler;
 use Solarium\Client;
