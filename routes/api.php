@@ -13,6 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+Route::get('/secure/v1/select', 'Api\ItemsQueryController@select');

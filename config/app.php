@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Solr Updater Service'),
+    'name' => env('APP_NAME', 'Laravel Indexer Service'),
 
     /*
     |--------------------------------------------------------------------------
