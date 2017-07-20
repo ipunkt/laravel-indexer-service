@@ -5,14 +5,14 @@ namespace Ipunkt\LaravelIndexer\Http\Api\Items;
 use Carbon\Carbon;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Database\Eloquent\Model;
-use Ipunkt\LaravelJsonApi\Contracts\RequestHandlers\HandlesDeleteRequest;
-use Ipunkt\LaravelJsonApi\Contracts\RequestHandlers\HandlesPostRequest;
-use Ipunkt\LaravelJsonApi\Http\RequestHandlers\RequestHandler;
-use Ipunkt\LaravelJsonApi\Http\Requests\ApiRequest;
 use Ipunkt\LaravelIndexer\EnvironmentValidation;
 use Ipunkt\LaravelIndexer\Jobs\Items\CreateItem;
 use Ipunkt\LaravelIndexer\Jobs\Items\DeleteItem;
 use Ipunkt\LaravelIndexer\Jobs\Solr\Optimize;
+use Ipunkt\LaravelJsonApi\Contracts\RequestHandlers\HandlesDeleteRequest;
+use Ipunkt\LaravelJsonApi\Contracts\RequestHandlers\HandlesPostRequest;
+use Ipunkt\LaravelJsonApi\Http\RequestHandlers\RequestHandler;
+use Ipunkt\LaravelJsonApi\Http\Requests\ApiRequest;
 use Tobscure\JsonApi\Parameters;
 
 class ItemsRequestHandler extends RequestHandler implements HandlesPostRequest, HandlesDeleteRequest
