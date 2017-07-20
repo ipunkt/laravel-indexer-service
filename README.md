@@ -160,7 +160,8 @@ And optional create a core:
 $> docker exec -it --user=solr my_solr bin/solr create_core -c gettingstarted
 ```
 
-Afterwards remove the container:
+Afterwards stop and remove the container:
 ```bash
+$> docker stop my_solr
 $> docker rm my_solr
 ```
