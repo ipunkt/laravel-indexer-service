@@ -21,7 +21,7 @@ class OptimizeTest extends TestCase
         // ARRANGE
         $item = [
             'id' => 1,
-            'source' => 'ahgz',
+            'source' => 'feed',
             'type' => 'article',
             'content' => $this->faker()->sentence(),
         ];

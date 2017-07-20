@@ -19,7 +19,7 @@ class ItemCreationTest extends TestCase
         // ARRANGE
         $item = [
             'id' => 1,
-            'source' => 'ahgz',
+            'source' => 'feed',
             'type' => 'article',
             'content' => $this->faker()->sentence(),
         ];
@@ -47,7 +47,7 @@ class ItemCreationTest extends TestCase
         // ARRANGE
         $item = [
             'id' => 1,
-            'source' => 'ahgz',
+            'source' => 'feed',
             'type' => 'article',
             'content' => $this->faker()->sentence(),
         ];
@@ -68,7 +68,7 @@ class ItemCreationTest extends TestCase
         Queue::fake();
 
         $item = [
-            'source' => 'ahgz',
+            'source' => 'feed',
             'type' => 'article',
             'content' => $this->faker()->sentence(),
         ];
@@ -93,7 +93,7 @@ class ItemCreationTest extends TestCase
 
         // ACT
         $job = new CreateItem($item = [
-            'source' => 'ahgz',
+            'source' => 'feed',
             'type' => 'article',
             'content' => $this->faker()->sentence(),
         ]);
@@ -119,7 +119,7 @@ class ItemCreationTest extends TestCase
 
         // ACT
         $job = new CreateItem($item = [
-            'source' => 'ahgz',
+            'source' => 'feed',
             'type' => 'article',
             'content' => $this->faker()->sentence(),
         ]);
