@@ -71,6 +71,77 @@ You can set up validation rules for every attribute found in the input request.
 
 Your local environment will be available [here](http://localhost:15540/).
 
+We (ipunkt) provide a package called [rancherize](https://www.github.com/ipunkt/rancherize) for hosting our web stacks in a rancher environment with various docker images. For local development you can use rancherize command in the following way.
+
+You need locally docker daemon installed.
+
+Copy following content in a rancherize.json file in your project root:
+
+```json
+{
+	"blueprints": {
+		"webserver": "Rancherize\\Blueprint\\Webserver\\WebserverBlueprint"
+	},
+	"blueprint": "webserver",
+	"default": {
+		"add-redis": true,
+		"add-database": false,
+		"add-version": "SVN_REVISION",
+		"queues": [
+			{
+				"connection": "redis",
+				"name": "default"
+			}
+		],
+		"rancher": {
+			"in-service": true,
+			"account": "your-rancher-account"
+		},
+		"docker": {
+			"account": "docker-account",
+			"repository": "docker-repository",
+			"version-prefix": "laravel-indexer-service_",
+			"base-image": "busybox"
+		},
+		"healthcheck": {
+			"url": "\/healthcheck"
+		},
+		"nginx-config": "",
+		"service-name": "LaravelIndexerService",
+		"environment": {
+			"QUEUE_DRIVER": "redis",
+			"REDIS_HOST": "redis",
+			"NO_MIGRATE": true,
+			"NO_SEED": true,
+			"SENTRY_DSN": "",
+			"APP_KEY": "base64:WMNa3A7KdAq8NMABeXrQDVZ0tg3BfaV1stkZ5melL6g="
+		}
+	},
+	"environments": {
+		"local": {
+			"debug-image": true,
+			"sync-user-into-container": true,
+			"expose-port": 15540,
+			"use-app-container": false,
+			"mount-workdir": true,
+			"php": "7.0",
+			"environment": {
+				"APP_ENV": "local",
+				"APP_DEBUG": true,
+				"APP_KEY": "base64:14Bp/oUv0Va4MMdT/cK8rKrypEIrj5MW0dlIbUcSFK0=",
+				"SOLR_HOST": "127.0.0.1",
+				"SOLR_PORT": 8983,
+				"SOLR_PATH": "/solr/",
+				"SOLR_CORE": "gettingstarted",
+				"SOLR_USERNAME": "",
+				"SOLR_PASSWORD": "",
+				"SOLR_TIMEOUT": 50
+			}
+		}
+	}
+}
+```
+
 Starting with `vendor/bin/rancherize start local` and stopping with `vendor/bin/rancherize stop local`.
 
 ### Artisan inside docker
