@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Solarium\Client;
 use Solarium\Exception\ExceptionInterface;
+use Solarium\Exception\HttpException;
 
 class CreateItem implements ShouldQueue
 {
@@ -46,6 +47,12 @@ class CreateItem implements ShouldQueue
                 ->addCommit();
 
             $result = $client->update($update);
+        } catch (HttpException $e) {
+            $errorBody = $e->getBody();
+
+            logger('error body: ' . $errorBody);
+            logger('error message: ' . $e->getStatusMessage());
+            logger('error code: ' . $e->getCode());
         } catch (ExceptionInterface $e) {
             throw new \RuntimeException('Document could not be inserted to solr', $e->getCode(), $e);
         }
