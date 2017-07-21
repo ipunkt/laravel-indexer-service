@@ -39,6 +39,7 @@ class CreateItem implements ShouldQueue
     {
         $endpoint = $client->getEndpoint();
         logger('endpoint: ' . $endpoint->getHost() . ', ' . $endpoint->getCore());
+        logger('config: ' . config('solarium.endpoint.default.host') . ', ' . config('solarium.endpoint.default.core'));
 
         // send data to solr
         try {
