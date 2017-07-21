@@ -37,6 +37,9 @@ class CreateItem implements ShouldQueue
      */
     public function handle(Client $client)
     {
+        $endpoint = $client->getEndpoint();
+        logger('endpoint: ' . $endpoint->getHost() . ', ' . $endpoint->getCore());
+
         // send data to solr
         try {
             $update = $client->createUpdate();
