@@ -5,12 +5,13 @@ namespace Ipunkt\LaravelIndexer\Jobs\Solr;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Cache\Repository;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Solarium\Client;
 use Solarium\Exception\ExceptionInterface;
+use Solarium\Exception\HttpException;
 
 class Optimize implements ShouldQueue
 {
@@ -56,6 +57,15 @@ class Optimize implements ShouldQueue
             $update = $client->createUpdate();
             $update->addOptimize(true, false);
             $result = $client->update($update);
+        } catch (HttpException $e) {
+            $errorMessage = $e->getMessage();
+            if (+$e->getCode() === 400) {
+                $error = json_decode($e->getBody(), true);
+                $errorMessage = array_get($error, 'error.msg', $e->getMessage());
+
+                $this->job->failed($e);
+            }
+            throw new \RuntimeException($errorMessage, $e->getCode(), $e);
         } catch (ExceptionInterface $e) {
             throw new \RuntimeException('No optimize command could be sent to solr', $e->getCode(), $e);
         }

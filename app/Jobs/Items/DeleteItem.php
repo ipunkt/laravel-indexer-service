@@ -3,12 +3,13 @@
 namespace Ipunkt\LaravelIndexer\Jobs\Items;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Solarium\Client;
 use Solarium\Exception\ExceptionInterface;
+use Solarium\Exception\HttpException;
 
 class DeleteItem implements ShouldQueue
 {
@@ -44,8 +45,16 @@ class DeleteItem implements ShouldQueue
                 ->addCommit();
 
             $result = $client->update($update);
-        } catch (ExceptionInterface $e)
-        {
+        } catch (HttpException $e) {
+            $errorMessage = $e->getMessage();
+            if (+$e->getCode() === 400) {
+                $error = json_decode($e->getBody(), true);
+                $errorMessage = array_get($error, 'error.msg', $e->getMessage());
+
+                $this->job->failed($e);
+            }
+            throw new \RuntimeException($errorMessage, $e->getCode(), $e);
+        } catch (ExceptionInterface $e) {
             throw new \RuntimeException('Document could not be deleted on solr', $e->getCode(), $e);
         }
     }

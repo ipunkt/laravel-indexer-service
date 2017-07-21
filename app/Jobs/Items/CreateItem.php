@@ -48,11 +48,14 @@ class CreateItem implements ShouldQueue
 
             $result = $client->update($update);
         } catch (HttpException $e) {
-            $errorBody = $e->getBody();
+            $errorMessage = $e->getMessage();
+            if (+$e->getCode() === 400) {
+                $error = json_decode($e->getBody(), true);
+                $errorMessage = array_get($error, 'error.msg', $e->getMessage());
 
-            logger('error body: ' . $errorBody);
-            logger('error message: ' . $e->getStatusMessage());
-            logger('error code: ' . $e->getCode());
+                $this->job->failed($e);
+            }
+            throw new \RuntimeException($errorMessage, $e->getCode(), $e);
         } catch (ExceptionInterface $e) {
             throw new \RuntimeException('Document could not be inserted to solr', $e->getCode(), $e);
         }
