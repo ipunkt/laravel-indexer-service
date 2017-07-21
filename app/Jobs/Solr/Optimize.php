@@ -64,6 +64,7 @@ class Optimize implements ShouldQueue
                 $errorMessage = array_get($error, 'error.msg', $e->getMessage());
 
                 $this->job->failed($e);
+                $this->job->delete();
             }
             throw new \RuntimeException($errorMessage, $e->getCode(), $e);
         } catch (ExceptionInterface $e) {
