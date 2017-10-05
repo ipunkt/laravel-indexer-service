@@ -14,14 +14,15 @@ class TestPayloadCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'test:payload {payload}';
+    protected $signature = 'test:payload {payload} {expected-fields}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Test sending the payload given as argument to solr';
+    protected $description = 'Test sending the payload given as argument to solr and test if the given expected-fields are correctly set.';
+
 	/**
 	 * @var Client
 	 */
@@ -62,8 +63,10 @@ class TestPayloadCommand extends Command
 		    return 1;
 	    }
 
+	    $expectedFields = $this->getExpectedFields();
+
     	try {
-		    $this->checkPayloadInSolr($payload);
+		    $this->checkPayloadInSolr($payload, $expectedFields);
     	} catch(\Exception $e) {
     		$this->info($e->getMessage());
 
@@ -83,10 +86,20 @@ class TestPayloadCommand extends Command
 	}
 
 	/**
+	 * @return array
+	 */
+	private function getExpectedFields() {
+		$payloadData = $this->argument( 'expected-fields' );
+
+		return json_decode( $payloadData, true );
+	}
+
+	/**
 	 * @param array $payload
+	 * @param array $expectedFields
 	 * @throws \Exception
 	 */
-	protected function checkPayloadInSolr(array $payload) {
+	protected function checkPayloadInSolr(array $payload, array $expectedFields) {
 		$selectData = [
 			'query' => 'id:'.array_get($payload, 'id')
 		];
@@ -103,13 +116,14 @@ class TestPayloadCommand extends Command
 		$array = $result->getIterator();
 		$document = $array->current();
 
-		foreach ($payload as $key => $value) {
+		foreach ($expectedFields as $key) {
 			if( !array_key_exists($key, $document->getFields()) )
 				throw new \Exception("Field $key does not exist in solr.");
 
+			$payloadValue = array_get($payload, $key);
 			$solrValue = array_get($document->getFields(), $key);
-			if( $solrValue != $value )
-				throw new \Exception("Field $key was not updated correctly: $$solrValue. Expected: $value");
+			if( $solrValue != $payloadValue )
+				throw new \Exception("Field $key was not updated correctly: $$solrValue. Expected: $payloadValue");
 		}
 	}
 }
