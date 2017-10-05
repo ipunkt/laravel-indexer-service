@@ -11,6 +11,12 @@ Each item can have various attributes, which all will be stored on the solr core
 
 The `id` attribute is special. Without an `id` attribute solr wil give the item an `id`. If you specify one (no matter where: as id or within the attributes) the solr core uses the given `id`.
 
+## Test
+
+Once configured you can test the service via command:
+
+	php artisan test:payload '{"data":"value"}'
+
 ## Configuration
 
 You have to configure various service options. Each of them are environment variables.

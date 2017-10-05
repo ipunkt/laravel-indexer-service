@@ -4,6 +4,7 @@ namespace Ipunkt\LaravelIndexer\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Ipunkt\LaravelIndexer\Console\Commands\TestPayloadCommand;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+    	TestPayloadCommand::class,
     ];
 
     /**
