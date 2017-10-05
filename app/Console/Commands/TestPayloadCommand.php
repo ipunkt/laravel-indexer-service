@@ -100,11 +100,15 @@ class TestPayloadCommand extends Command
 		if($result->getNumFound() > 1)
 			throw new \Exception('More than one document with the given id found.');
 
-		$document = $result[0];
+		$array = $result->getIterator();
+		$document = $array->current();
 
 		foreach ($payload as $key => $value) {
-			$solrValue = $document->${$key};
-			if( $solrValue != $value)
+			if( !array_key_exists($key, $document->getFields()) )
+				throw new \Exception("Field $key does not exist in solr.");
+
+			$solrValue = array_get($document->getFields(), $key);
+			if( $solrValue != $value )
 				throw new \Exception("Field $key was not updated correctly: $$solrValue. Expected: $value");
 		}
 	}
