@@ -7,6 +7,15 @@ use Ipunkt\LaravelIndexer\Jobs\Fake\FakeJob;
 use Ipunkt\LaravelIndexer\Jobs\Items\CreateItem;
 use Solarium\Client;
 
+/**
+ * Class TestPayloadCommand
+ * @package Ipunkt\LaravelIndexer\Console\Commands
+ *
+ * This command allows sending json data given as argument synchronously.
+ * It tests that the solr returns a document with the same id as the payload.
+ * If expected-fields are given as comma seperated list then the fields listed there are compared between the payload
+ *  and the document returned by solr.
+ */
 class TestPayloadCommand extends Command
 {
     /**

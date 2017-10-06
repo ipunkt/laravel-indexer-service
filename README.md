@@ -15,7 +15,12 @@ The `id` attribute is special. Without an `id` attribute solr wil give the item 
 
 Once configured you can test the service via command:
 
-	php artisan test:payload '{"data":"value"}'
+	php artisan test:payload '{"id":"some-id"}' [expected-fields]
+	
+It will send the json object given as first argument to the solr.  
+If an `id` is included in the payload then the command verifies that the solr returns a document with the given id.  
+`expected-fields` is an optional comma-separated list. When given then the fields listed here are compared between the
+response from solr and the payload.
 
 ## Configuration
 
