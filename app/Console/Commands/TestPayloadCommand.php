@@ -77,10 +77,12 @@ class TestPayloadCommand extends Command
     	try {
 		    $this->checkPayloadInSolr($payload, $expectedFields);
     	} catch(\Exception $e) {
-    		$this->info($e->getMessage());
+    		$this->error($e->getMessage());
 
 		    return 2;
     	}
+
+    	$this->info('Test successful');
 
 		return 0;
     }
@@ -109,6 +111,12 @@ class TestPayloadCommand extends Command
 	 * @throws \Exception
 	 */
 	protected function checkPayloadInSolr(array $payload, array $expectedFields) {
+		if( !array_has($payload, 'id') ) {
+			$this->info('No `id` field in the payload. No verification that the data was received by solr.');
+
+			return;
+		}
+
 		$selectData = [
 			'query' => 'id:'.array_get($payload, 'id')
 		];
