@@ -14,14 +14,14 @@ class TestPayloadCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'test:payload {payload} {expected-fields}';
+    protected $signature = 'test:payload {payload} {expected-fields?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Test sending the payload given as argument to solr and test if the given expected-fields are correctly set.';
+    protected $description = 'Test sending the payload given as argument to solr. If a comma separated list of expected fields is given the response will be compared to the payload for those fields.';
 
 	/**
 	 * @var Client
@@ -91,7 +91,7 @@ class TestPayloadCommand extends Command
 	private function getExpectedFields() {
 		$payloadData = $this->argument( 'expected-fields' );
 
-		return json_decode( $payloadData, true );
+		return explode(',', $payloadData);
 	}
 
 	/**
@@ -113,15 +113,30 @@ class TestPayloadCommand extends Command
 		if($result->getNumFound() > 1)
 			throw new \Exception('More than one document with the given id found.');
 
+		if( empty($expectedFields) )
+			return;
+
 		$array = $result->getIterator();
 		$document = $array->current();
+		$solrFields = $document->getFields();
 
 		foreach ($expectedFields as $key) {
-			if( !array_key_exists($key, $document->getFields()) )
+			if( !array_key_exists($key, $solrFields ) )
 				throw new \Exception("Field $key does not exist in solr.");
 
 			$payloadValue = array_get($payload, $key);
-			$solrValue = array_get($document->getFields(), $key);
+			$solrValue = array_get( $solrFields, $key);
+			if( is_array($solrValue) && !is_array($payloadValue) )
+				$solrValue = $solrValue[0];
+
+			if( is_array($solrValue) && is_array($payloadValue) ) {
+				sort($payloadValue);
+				$payloadValue = implode(',', $payloadValue);
+				sort($solrValue);
+				$solrValue = implode(',', $solrValue);
+			}
+
+
 			if( $solrValue != $payloadValue )
 				throw new \Exception("Field $key was not updated correctly: $$solrValue. Expected: $payloadValue");
 		}
