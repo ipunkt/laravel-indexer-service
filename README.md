@@ -11,6 +11,17 @@ Each item can have various attributes, which all will be stored on the solr core
 
 The `id` attribute is special. Without an `id` attribute solr wil give the item an `id`. If you specify one (no matter where: as id or within the attributes) the solr core uses the given `id`.
 
+## Test
+
+Once configured you can test the service via command:
+
+	php artisan test:payload '{"id":"some-id"}' [expected-fields]
+	
+It will send the json object given as first argument to the solr.  
+If an `id` is included in the payload then the command verifies that the solr returns a document with the given id.  
+`expected-fields` is an optional comma-separated list. When given then the fields listed here are compared between the
+response from solr and the payload.
+
 ## Configuration
 
 You have to configure various service options. Each of them are environment variables.
