@@ -1,4 +1,4 @@
-FROM ipunktbs/nginx:1.10.2-7-1.3.0
+FROM ipunktbs/nginx:1.10.2-7-1.4.0
 ADD . /var/www/app
 WORKDIR /var/www/app
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
