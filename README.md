@@ -135,12 +135,13 @@ Copy following content in a rancherize.json file in your project root:
 			"expose-port": 15540,
 			"use-app-container": false,
 			"mount-workdir": true,
+			"default-network":"indexer-service",
 			"php": "7.0",
 			"environment": {
 				"APP_ENV": "local",
 				"APP_DEBUG": true,
 				"APP_KEY": "base64:14Bp/oUv0Va4MMdT/cK8rKrypEIrj5MW0dlIbUcSFK0=",
-				"SOLR_HOST": "127.0.0.1",
+				"SOLR_HOST": "my_solr",
 				"SOLR_PORT": 8983,
 				"SOLR_PATH": "/solr/",
 				"SOLR_CORE": "gettingstarted",
@@ -153,6 +154,8 @@ Copy following content in a rancherize.json file in your project root:
 }
 ```
 
+Create a docker network once with `docker network create indexer-service`.
+
 Starting with `vendor/bin/rancherize start local` and stopping with `vendor/bin/rancherize stop local`.
 
 ### Artisan inside docker
@@ -163,7 +166,7 @@ Starting with `vendor/bin/rancherize start local` and stopping with `vendor/bin/
 
 Just exec
 ```bash
-$> docker run --name my_solr -d -p 8983:8983 -t solr
+$> docker run --network indexer-service --name my_solr -d -p 8983:8983 -t solr
 ```
 
 And optional create a core:
