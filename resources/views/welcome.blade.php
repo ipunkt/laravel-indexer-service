@@ -80,7 +80,7 @@
 	</div>
 
 	<footer>
-		<a href="http://www.ipunkt.biz?utm_source={{ str_slug(config('app.name')) }}" target="_blank">&copy; ipunkt Business Solutions</a>
+		<a href="https://www.ipunkt.biz?utm_source={{ str_slug(config('app.name')) }}" target="_blank">&copy; ipunkt Business Solutions</a>
 	</footer>
 </div>
 </body>
