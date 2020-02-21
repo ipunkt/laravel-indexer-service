@@ -160,7 +160,7 @@ Starting with `vendor/bin/rancherize start local` and stopping with `vendor/bin/
 
 ### Artisan inside docker
 
-`docker exec -it laravelindexerservice_LaravelIndexerService_1 php /var/www/app/artisan`
+`docker exec -it laravelindexerservice_PHP-FPM-LaravelIndexerService_1 php /var/www/app/artisan`
 
 ### Solr on local development
 
